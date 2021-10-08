@@ -7,8 +7,10 @@ from bindsnet.encoding import poisson
 from bindsnet import encoding
 import matplotlib.pyplot as plt
 
+from neuromllite.utils import _val_info
+
 import torch
-time =500
+time =1500
 dt = 1.0
 n_neurons =100
 
@@ -27,9 +29,11 @@ network.add_connection(
 # Spike monitor objects.
 M1 = Monitor(obj=X, state_vars=['s'])
 M2 = Monitor(obj=Y, state_vars=['s'])
-
 network.add_monitor(monitor=M1, name='X')
 network.add_monitor(monitor=M2, name='Y')
+
+V2 = Monitor(Y, ['v'])
+network.add_monitor(monitor=V2, name='YV')
 
 data = 15 * torch.rand(n_neurons)  # Generate random Poisson rates for 100 input neurons.
 train = encoding.poisson(datum=data, time=time)  # Encode input as 5000ms Poisson spike trains.
@@ -46,6 +50,10 @@ print('Finished!')
 # Plot spikes of input and output layers.
 spikes = {'X' : M1.get('s'), 'Y' : M2.get('s')}
 
+voltages = V2.get("v")
+print(_val_info(voltages))
+print(voltages.shape)
+
 fig, axes = plt.subplots(2, 1, figsize=(12, 7))
 for i, layer in enumerate(spikes):
 
@@ -57,5 +65,10 @@ for i, layer in enumerate(spikes):
     axes[i].set_xlabel('Time'); axes[i].set_ylabel('Index of neuron')
     axes[i].set_xticks(()); axes[i].set_yticks(())
     axes[i].set_aspect('auto')
+
+plt.figure()
+for i in range(5):
+    v = voltages[0:,0,i]
+    plt.plot(v)
 
 plt.tight_layout(); plt.show()

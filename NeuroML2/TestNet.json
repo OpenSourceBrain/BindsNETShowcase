@@ -1,0 +1,51 @@
+{
+    "TestNet": {
+        "version": "NeuroMLlite v0.3.5",
+        "parameters": {
+            "n_neurons": 100,
+            "input_freq": 50
+        },
+        "cells": {
+            "Input": {
+                "bindsnet_node": "Input",
+                "parameters": {}
+            },
+            "LIF": {
+                "bindsnet_node": "LIFNodes",
+                "parameters": {}
+            }
+        },
+        "regions": {
+            "region1": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "width": 1000.0,
+                "height": 100.0,
+                "depth": 1000.0
+            }
+        },
+        "populations": {
+            "InputPop": {
+                "size": "n_neurons",
+                "component": "Input",
+                "properties": {
+                    "color": "0.8 0 0"
+                },
+                "random_layout": {
+                    "region": "region1"
+                }
+            },
+            "LIFPop": {
+                "size": "n_neurons",
+                "component": "LIF",
+                "properties": {
+                    "color": "0 0.8 0"
+                },
+                "random_layout": {
+                    "region": "region1"
+                }
+            }
+        }
+    }
+}
