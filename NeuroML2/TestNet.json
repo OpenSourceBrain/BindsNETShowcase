@@ -2,7 +2,7 @@
     "TestNet": {
         "version": "NeuroMLlite v0.3.5",
         "parameters": {
-            "n_neurons": 100,
+            "n_neurons": 10,
             "input_freq": 50
         },
         "cells": {
